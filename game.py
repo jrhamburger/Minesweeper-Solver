@@ -1,4 +1,5 @@
 import numpy as np
+import random
 
 class Minesweeper:
     def __init__(self, rows=9, cols = 9, mine_count = 10):
@@ -26,5 +27,33 @@ class Minesweeper:
                     neighbors.append((neighbor_row, neighbor_col))
 
         return neighbors
+
+    def place_mines(self, first_row, first_col):
+        protected = self.get_neighbors(first_row, first_col)
+        protected.append((first_row, first_col))
+
+        placed = 0
+
+        while placed < self.mine_count:
+            row = random.randint(0, self.rows - 1)
+            col = random.randint(0, self.cols - 1)
+
+            if (row, col) in protected:
+                continue
+
+            if self.board[row][col] == -1:
+                continue
+
+            self.board[row][col] = -1
+            placed += 1
+
+    def calculate_numbers(self):
+
+        for row in range(self.rows):
+            for col in range(self.cols):
+
+                neighbors = self.get_neighbors(row, col)
+
+
 
 
